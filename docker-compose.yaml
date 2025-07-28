@@ -1,0 +1,47 @@
+
+version: '3.8'
+services:
+  backend:
+    build:
+      context: ./Autodrive-1
+      dockerfile: Dockerfile
+    container_name: autodrive-backend
+    ports:
+      - "8080:8080"
+    networks:
+      - autodrive-network
+
+  frontend:
+    build:
+      context: ./autofront-send-a
+      dockerfile: Dockerfile
+    container_name: autodrive-frontend
+    ports:
+      - "3000:80" # Mappe le port 3000 de votre machine hôte au port 80 (port de Nginx) du conteneur fronten
+    environment:
+      API_BASE_URL: http://backend:8080/api # URL de votre API Spring Boot vue depuis le conteneur frontend
+      AI_API_URL: http://chatbox:8000
+      WEBSOCKET_URL: http://backend:8080/ws # URL de votre endpoint WebSocket vue depuis le conteneur frontend
+    depends_on:
+      - backend
+      - chatbox
+    networks:
+      - autodrive-network
+  chatbox:
+    build:
+      context: ./chatbox
+      dockerfile: Dockerfile
+    container_name: chatbox
+    ports:
+      - "8000:8000"
+    environment:
+      OPENAI_API_KEY: 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
+    networks:
+      - autodrive-network
+    depends_on:
+      - backend
+
+
+networks:
+    autodrive-network:
+        driver: bridge

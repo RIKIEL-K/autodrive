@@ -1,0 +1,31 @@
+body {
+  background-color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+}
+.tab-button {
+  border: none;
+  background: none;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: background 0.3s;
+}
+.tab-button.active {
+  background-color: #f0f0f0;
+}
+.input-box {
+  background-color: #f9f9f9;
+  border: none;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+}
+.btn-black {
+  background-color: #000;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  margin-top: 1rem;
+}

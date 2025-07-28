@@ -1,0 +1,6 @@
+body.sb-sidenav-toggled #layoutSidenav #layoutSidenav_nav {
+  margin-left: -250px;
+}
+body.sb-sidenav-toggled #layoutSidenav #layoutSidenav_content {
+  margin-left: 0;
+}
