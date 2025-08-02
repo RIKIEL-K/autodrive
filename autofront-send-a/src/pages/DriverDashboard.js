@@ -104,13 +104,6 @@ const DriverDashboard = () => {
             <button className="btn btn-outline-primary" onClick={() => navigate('/parametres')}>
               Paramètres
             </button>
-            <button className="btn btn-light position-relative">
-              <i className="bi bi-bell fs-5 text-primary"></i>
-              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                3
-                <span className="visually-hidden">notifications non lues</span>
-              </span>
-            </button>
           </div>
         </div>
 
@@ -118,7 +111,8 @@ const DriverDashboard = () => {
           <DashboardCard title="Commandes" text="Vos commandes actives et historiques." onClick={() => navigate(`/commandes/${id}`)} />
           <DashboardCard title="Facturation" text="Suivez vos paiements et revenus." onClick={() => navigate('/facturation')} />
           <DashboardCard title="Voiture" text="Informations sur votre véhicule." onClick={() => navigate(`/car/${id}`)} />
-          <DashboardCard title="Contact" text="Messagerie avec vos clients et l’équipe." onClick={() => navigate(`/contact/${id}`)} />
+          <DashboardCard title="Ma banque" text="Vos informations bancaires." onClick={() => navigate(`/driver/finance/${id}`)} />
+          <DashboardCard className="mt-2" title="Contact" text="Messagerie avec vos clients et l’équipe." onClick={() => navigate(`/contact/${id}`)} />
         </div>
       </div>
 

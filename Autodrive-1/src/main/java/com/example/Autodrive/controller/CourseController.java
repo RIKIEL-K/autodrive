@@ -10,6 +10,7 @@ import com.example.Autodrive.repository.DriverRepository;
 import com.example.Autodrive.service.CourseService;
 import com.mongodb.client.model.geojson.Point;
 import com.mongodb.client.model.geojson.Position;
+import com.stripe.exception.StripeException;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.origin.Origin;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
@@ -62,7 +63,8 @@ public class CourseController {
 
     @PutMapping("/accept/{id}")
     public ResponseEntity<Course> acceptCourse(@PathVariable String id,
-                                               @RequestParam String driverId) {
+                                               @RequestParam String driverId) throws StripeException {
+        System.out.println("Course acceptée et payée pour le chauffeur avec ID: " + driverId);
         return ResponseEntity.ok(courseService.acceptCourse(id, driverId));
     }
     @GetMapping("/status/{userId}")

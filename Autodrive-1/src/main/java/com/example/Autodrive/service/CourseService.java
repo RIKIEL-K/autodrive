@@ -4,12 +4,15 @@ package com.example.Autodrive.service;
 import com.example.Autodrive.model.Course;
 import com.example.Autodrive.model.CourseStatus;
 import com.example.Autodrive.model.Driver;
+import com.example.Autodrive.model.User;
 import com.example.Autodrive.repository.CourseRepository;
 import com.example.Autodrive.repository.DriverRepository;
 
+import com.example.Autodrive.repository.UserRepository;
 import com.example.Autodrive.repository.VoitureRepository;
 import com.mongodb.client.model.geojson.Point;
 import com.mongodb.client.model.geojson.Position;
+import com.stripe.exception.StripeException;
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
@@ -25,6 +28,8 @@ public class CourseService {
     private final CourseRepository courseRepo;
     private final DriverRepository driverRepo;
     private final VoitureRepository voitureRepository;
+    private final UserRepository userRepo;
+    private final StripeService stripeService;
 
     private static final double RAYON_METRES = 1000;
     private static final double PRIX_PAR_KM = 5.0;
@@ -91,13 +96,35 @@ public class CourseService {
         return courseRepo.findPendingCoursesNear(longitude, latitude, maxDistanceInMeters);
     }
 
-    public Course acceptCourse(String courseId, String driverId) {
+    public Course acceptCourse(String courseId, String driverId) throws StripeException {
         System.out.println("Accepting course with ID: " + courseId + " for driver: " + driverId);
         Course course = courseRepo.findById(courseId).orElseThrow();
+        User user = userRepo.findById(course.getUserId()).orElseThrow();
+        Driver driver = driverRepo.findById(driverId).orElseThrow();
+
+        // Paiement immédiat
+        long amountCents = (long) (course.getPrix() * 100);
+        stripeService.processPayment(
+                user.getStripeCustomerId(),
+                driver.getStripeAccountId(),
+                amountCents
+        );
+
+        driver.setSolde(driver.getSolde() + course.getPrix());
+        user.setSolde(user.getSolde() - course.getPrix());
+
+        // Mise à jour des soldes
+        userRepo.save(user);
+        driverRepo.save(driver);
+
+        System.out.println("Solde du conducteur mis à jour: " + driver.getSolde());
+        System.out.println("Solde de l'utilisateur mis à jour: " + user.getSolde());
+
         course.setDriverId(driverId);
         course.setStatus(CourseStatus.ACCEPTEE);
         return courseRepo.save(course);
     }
+
     public Course getLatestCourseStatus(String userId) {
         return courseRepo.findTopByUserIdOrderByDateDesc(userId).orElse(null);
     }
