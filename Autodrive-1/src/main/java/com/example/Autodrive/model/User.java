@@ -39,6 +39,9 @@ public class User {
     // Visibilité du compte (pour la fonctionnalité "rendre invisible")
     private boolean accountVisible = true;
 
+    private String stripeCustomerId;
+    private double solde = 0.0;
+
     // Date de création du compte
     private Date createdAt = new Date();
 

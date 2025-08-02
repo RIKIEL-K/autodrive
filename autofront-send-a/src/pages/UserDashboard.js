@@ -87,17 +87,33 @@ const UserDashboard = () => {
           <div className="col-md-4 col-xl-3">
             <div className="card shadow text-center border-0">
               <div className="card-body py-4">
-                <h5 className="card-title text-primary">Transactions</h5>
-                <p className="card-text">Consulter l’historique de vos courses.</p>
+                <h5 className="card-title text-primary">Ma banque</h5>
+                <p className="card-text">Consulter votre solde et votre compte bancaire.</p>
                 <button
                   className="btn btn-outline-primary btn-sm"
-                  onClick={() => navigate(`/user-transaction-list/${id}`)}
+//                  onClick={() => navigate(`/user-transaction-list/${id}`)}
+                  onClick={() => navigate(`/finance/${id}`)}
                 >
-                  Voir l’historique
+                  Voir le solde
                 </button>
               </div>
             </div>
           </div>
+
+                    <div className="col-md-4 col-xl-3">
+                      <div className="card shadow text-center border-0">
+                        <div className="card-body py-4">
+                          <h5 className="card-title text-primary">Transactions</h5>
+                          <p className="card-text">Consulter l’historique de vos courses.</p>
+                          <button
+                            className="btn btn-outline-primary btn-sm"
+                            onClick={() => navigate(`/user-transaction-list/${id}`)}
+                          >
+                            Voir l’historique
+                          </button>
+                        </div>
+                      </div>
+                    </div>
 
           <div className="col-md-4 col-xl-3">
             <div className="card shadow text-center border-0">

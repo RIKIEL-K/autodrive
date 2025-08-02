@@ -11,6 +11,7 @@ import AccountSettings from "./pages/AccountSettings";
 import NotFound from "./pages/NotFound";
 import UserDashboard from "./pages/UserDashboard";
 import FinanceLayout from "./pages/FinanceLayout";
+import DriverFinanceLayout from "./pages/DriverFinanceLayout";
 import AddCard from "./pages/AddCard";
 import CarManagement from "./pages/CarManagement";
 import AddCar from "./pages/AddCar";
@@ -68,6 +69,8 @@ function App() {
           <Route path="/user-dashboard/:id" element={<UserDashboard />} />
           <Route path="/CourseInteractionPage/:id" element={<CourseInteractionPage />} />
           <Route path="/contact/:id" element={<Contact />} />
+          <Route path="/finance/:id" element={<FinanceLayout />} />
+          <Route path="/driver/finance/:id" element={<DriverFinanceLayout />} />
         </Routes>
       </Router>
     </>
