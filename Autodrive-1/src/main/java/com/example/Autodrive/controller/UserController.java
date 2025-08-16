@@ -1,8 +1,8 @@
 package com.example.Autodrive.controller;
 
 
-import com.example.Autodrive.model.User;
-import com.example.Autodrive.service.UserService;
+import com.example.Autodrive.User.Model.User;
+import com.example.Autodrive.User.Service.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

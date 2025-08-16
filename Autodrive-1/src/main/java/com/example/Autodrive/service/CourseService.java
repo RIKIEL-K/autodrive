@@ -2,19 +2,18 @@ package com.example.Autodrive.service;
 
 
 import com.example.Autodrive.model.Course;
-import com.example.Autodrive.model.CourseStatus;
-import com.example.Autodrive.model.Driver;
-import com.example.Autodrive.model.User;
+import com.example.Autodrive.Enums.CourseStatus;
+import com.example.Autodrive.Driver.Model.Driver;
+import com.example.Autodrive.User.Model.User;
 import com.example.Autodrive.repository.CourseRepository;
-import com.example.Autodrive.repository.DriverRepository;
+import com.example.Autodrive.Driver.Repository.DriverRepository;
 
-import com.example.Autodrive.repository.UserRepository;
+import com.example.Autodrive.User.Repository.UserRepository;
 import com.example.Autodrive.repository.VoitureRepository;
 import com.mongodb.client.model.geojson.Point;
 import com.mongodb.client.model.geojson.Position;
 import com.stripe.exception.StripeException;
 import lombok.RequiredArgsConstructor;
-import org.bson.Document;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.stereotype.Service;
 

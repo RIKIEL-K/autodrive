@@ -1,9 +1,9 @@
 package com.example.Autodrive.service;
 
-import com.example.Autodrive.model.Driver;
-import com.example.Autodrive.model.User;
-import com.example.Autodrive.repository.DriverRepository;
-import com.example.Autodrive.repository.UserRepository;
+import com.example.Autodrive.Driver.Model.Driver;
+import com.example.Autodrive.User.Model.User;
+import com.example.Autodrive.Driver.Repository.DriverRepository;
+import com.example.Autodrive.User.Repository.UserRepository;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Account;
 import com.stripe.model.Customer;

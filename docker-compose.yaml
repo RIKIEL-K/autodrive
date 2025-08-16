@@ -1,4 +1,3 @@
-
 version: '3.8'
 services:
   backend:
@@ -8,6 +7,11 @@ services:
     container_name: autodrive-backend
     ports:
       - "8080:8080"
+    environment:
+      # Use a non-SRV MongoDB URI to avoid DNS SRV lookups inside the container
+      # Adjust this to your actual MongoDB host if not running locally
+      SPRING_DATA_MONGODB_URI: mongodb://host.docker.internal:27017/autodrivedb?retryWrites=true&w=majority
+      JWT_SECRET: 0920345690887756372139595932029349932010300000000000000983375743220000000
     networks:
       - autodrive-network
 
@@ -19,9 +23,11 @@ services:
     ports:
       - "3000:80" # Mappe le port 3000 de votre machine hôte au port 80 (port de Nginx) du conteneur fronten
     environment:
-      API_BASE_URL: http://backend:8080/api # URL de votre API Spring Boot vue depuis le conteneur frontend
+      SPRING_DATA_MONGODB_URI: mongodb://host.docker.internal:27017/autodrivedb?retryWrites=true&w=majority
+      JWT_SECRET: 0920345690887756372139595932029349932010300000000000000983375743220000000
+      API_BASE_URL: http://backend:8080/api
       AI_API_URL: http://chatbox:8000
-      WEBSOCKET_URL: http://backend:8080/ws # URL de votre endpoint WebSocket vue depuis le conteneur frontend
+      WEBSOCKET_URL: http://backend:8080/ws
     depends_on:
       - backend
       - chatbox

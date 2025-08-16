@@ -1,4 +1,4 @@
-package com.example.Autodrive.model;
+package com.example.Autodrive.Enums;
 
 public enum Role {
     USER,

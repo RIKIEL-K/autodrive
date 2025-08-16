@@ -1,5 +1,6 @@
-package com.example.Autodrive.model;
+package com.example.Autodrive.Driver.Model;
 
+import com.example.Autodrive.Enums.Role;
 import com.mongodb.client.model.geojson.Point;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

@@ -1,10 +1,11 @@
-package com.example.Autodrive.model;
+package com.example.Autodrive.User.Model;
 
+import com.example.Autodrive.Enums.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Generated;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,7 +15,6 @@ import java.util.Date;
 
 @Data
 @Document(collection = "users")
-
 public class User {
     @Id
     private String id;

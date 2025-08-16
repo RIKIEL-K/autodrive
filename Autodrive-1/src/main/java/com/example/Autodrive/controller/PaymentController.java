@@ -1,9 +1,9 @@
 package com.example.Autodrive.controller;
 
-import com.example.Autodrive.model.Driver;
-import com.example.Autodrive.model.User;
-import com.example.Autodrive.repository.DriverRepository;
-import com.example.Autodrive.repository.UserRepository;
+import com.example.Autodrive.Driver.Model.Driver;
+import com.example.Autodrive.User.Model.User;
+import com.example.Autodrive.Driver.Repository.DriverRepository;
+import com.example.Autodrive.User.Repository.UserRepository;
 import com.example.Autodrive.service.StripeService;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
@@ -12,8 +12,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor

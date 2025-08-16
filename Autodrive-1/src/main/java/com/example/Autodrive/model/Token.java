@@ -1,5 +1,6 @@
 package com.example.Autodrive.model;
 
+import com.example.Autodrive.User.Model.User;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

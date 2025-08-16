@@ -1,5 +1,6 @@
 package com.example.Autodrive.model;
 
+import com.example.Autodrive.Enums.CourseStatus;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import lombok.AllArgsConstructor;

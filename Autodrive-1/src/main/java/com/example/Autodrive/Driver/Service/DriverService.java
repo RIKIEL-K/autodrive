@@ -1,11 +1,11 @@
-package com.example.Autodrive.service;
+package com.example.Autodrive.Driver.Service;
 
 
 import com.example.Autodrive.model.Compte;
-import com.example.Autodrive.model.Driver;
-import com.example.Autodrive.model.Role;
+import com.example.Autodrive.Driver.Model.Driver;
+import com.example.Autodrive.Enums.Role;
 import com.example.Autodrive.repository.CompteRepository;
-import com.example.Autodrive.repository.DriverRepository;
+import com.example.Autodrive.Driver.Repository.DriverRepository;
 import com.example.Autodrive.repository.VoitureRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

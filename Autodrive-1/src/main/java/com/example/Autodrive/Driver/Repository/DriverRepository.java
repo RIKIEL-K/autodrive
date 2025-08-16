@@ -1,6 +1,6 @@
-package com.example.Autodrive.repository;
+package com.example.Autodrive.Driver.Repository;
 
-import com.example.Autodrive.model.Driver;
+import com.example.Autodrive.Driver.Model.Driver;
 import com.mongodb.client.model.geojson.Point;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;

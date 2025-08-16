@@ -2,22 +2,17 @@ package com.example.Autodrive.controller;
 
 
 import com.example.Autodrive.Requests.CourseRequestDTO;
-import com.example.Autodrive.Requests.DriverStatusUpdateRequest;
 import com.example.Autodrive.model.Course;
-import com.example.Autodrive.model.Driver;
 import com.example.Autodrive.repository.CourseRepository;
-import com.example.Autodrive.repository.DriverRepository;
+import com.example.Autodrive.Driver.Repository.DriverRepository;
 import com.example.Autodrive.service.CourseService;
-import com.mongodb.client.model.geojson.Point;
-import com.mongodb.client.model.geojson.Position;
 import com.stripe.exception.StripeException;
 import lombok.AllArgsConstructor;
-import org.springframework.boot.origin.Origin;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.example.Autodrive.model.CourseStatus;
+import com.example.Autodrive.Enums.CourseStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;

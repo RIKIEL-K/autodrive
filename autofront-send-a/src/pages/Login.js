@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AuthService from '../services/Authservice';
 import Loading from '../components/Loading';
@@ -8,46 +7,53 @@ import api from '../utils/api';
 
 function Login() {
   const [formData, setFormData] = useState({ email: '', password: '' });
+  const [selectedRole, setSelectedRole] = useState('USER'); // USER | DRIVER (en majuscules pour le backend)
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [selectedRole, setSelectedRole] = useState('user');
   const navigate = useNavigate();
+
   useEffect(() => {
     if (AuthService.isAuthenticated()) {
-      navigate(`/index/${AuthService.getUserId()}`);
+      const role = AuthService.getRole();
+      const id = AuthService.getUserId();
+      goToDashboard(role, id);
     }
-  }, [navigate]);
+  }, []);
 
-  const handleChange = e =>
+  const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-    setLoading(true);
+  const goToDashboard = (role, id) => {
+    if (role === 'DRIVER') return navigate(`/driver-dashboard/${id}`);
+    return navigate(`/user-dashboard/${id}`);
+  };
 
-    const endpoint =
-      selectedRole === "driver"
-        ? `/drivers/login`
-        : `/auth/login`;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true); setError('');
 
     try {
-      const res = await api.post(endpoint, formData);
-      const { token, userId, firstname } = res.data;
-
-      AuthService.login({
-        token,
-        userId,
-        firstname,
-        role: selectedRole.toUpperCase()
+      // endpoint unique
+      const { data } = await api.post('/auth/login', {
+        email: formData.email,
+        password: formData.password,
+        role: selectedRole,       // "USER" ou "DRIVER"
       });
 
-      setTimeout(() => {
-        navigate(`/${selectedRole}-dashboard/${userId}`);
-      }, 1000);
+      // token + refreshToken + infos
+      AuthService.login({
+        token: data.token,
+        refreshToken: data.refreshToken,
+        userId: data.userId,
+        firstname: data.firstname,
+        role: data.role, // renvoyé par le backend
+      });
 
+      goToDashboard(data.role, data.userId);
     } catch (err) {
-      console.error("Erreur de connexion :", err);
-      setError(err.response?.data?.error || "Erreur serveur inattendue.");
+      console.error('Erreur de connexion :', err);
+      setError(err.response?.data?.error || 'Erreur serveur inattendue.');
+    } finally {
       setLoading(false);
     }
   };
@@ -56,7 +62,7 @@ function Login() {
 
   return (
     <div className="container d-flex justify-content-center align-items-center vh-100">
-      <div className="card p-4 shadow" style={{ maxWidth: 400, width: '100%' }}>
+      <div className="card p-4 shadow" style={{ maxWidth: 420, width: '100%' }}>
         <h3 className="text-center mb-4">Connexion</h3>
         {error && <div className="alert alert-danger">{error}</div>}
 
@@ -68,8 +74,8 @@ function Login() {
               value={selectedRole}
               onChange={(e) => setSelectedRole(e.target.value)}
             >
-              <option value="user">Utilisateur</option>
-              <option value="driver">Véhicule</option>
+              <option value="USER">Utilisateur</option>
+              <option value="DRIVER">Chauffeur</option>
             </select>
           </div>
 
@@ -81,6 +87,7 @@ function Login() {
               name="email"
               onChange={handleChange}
               required
+              autoComplete="username"
             />
           </div>
 
@@ -92,10 +99,13 @@ function Login() {
               name="password"
               onChange={handleChange}
               required
+              autoComplete="current-password"
             />
           </div>
 
-          <button type="submit" className="btn btn-dark w-100">Se connecter</button>
+          <button type="submit" className="btn btn-dark w-100" disabled={loading}>
+            {loading ? 'Connexion…' : 'Se connecter'}
+          </button>
         </form>
 
         <div className="text-center mt-3">
@@ -105,7 +115,7 @@ function Login() {
         </div>
 
         <div className="text-center mt-3">
-          <a href="/" className="text-decoration-none">Créer un compte</a>
+          <a href="/register" className="text-decoration-none">Créer un compte</a>
         </div>
       </div>
     </div>

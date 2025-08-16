@@ -1,10 +1,10 @@
 package com.example.Autodrive.controller;
 
-import com.example.Autodrive.DTO.LoginRequest;
+import com.example.Autodrive.Auth.dto.LoginRequest;
 import com.example.Autodrive.Requests.DriverStatusUpdateRequest;
-import com.example.Autodrive.model.Driver;
-import com.example.Autodrive.repository.DriverRepository;
-import com.example.Autodrive.service.DriverService;
+import com.example.Autodrive.Driver.Model.Driver;
+import com.example.Autodrive.Driver.Repository.DriverRepository;
+import com.example.Autodrive.Driver.Service.DriverService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
@@ -38,27 +38,6 @@ public class DriverController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-    @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> loginDriver(@RequestBody LoginRequest loginRequest) {
-        try {
-            Driver driver = conducteurService.loginDriver(loginRequest.getEmail(), loginRequest.getPassword());
-
-            Map<String, String> response = new HashMap<>();
-            response.put("userId", driver.getId());
-            response.put("firstname", driver.getFirstname());
-            response.put("role", driver.getRole().toString());
-
-            return ResponseEntity.ok(response);
-
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("error", "Connexion échouée : " + e.getMessage()));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("error", "Erreur serveur : " + e.getMessage()));
-        }
-    }
-
 
     @PutMapping("/en-ligne/{id}")
     public ResponseEntity<?> updateEnLigne(@PathVariable String id,

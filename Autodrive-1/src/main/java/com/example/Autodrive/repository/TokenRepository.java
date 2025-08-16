@@ -1,7 +1,7 @@
 package com.example.Autodrive.repository;
 
 import com.example.Autodrive.model.Token;
-import com.example.Autodrive.model.User;
+import com.example.Autodrive.User.Model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 

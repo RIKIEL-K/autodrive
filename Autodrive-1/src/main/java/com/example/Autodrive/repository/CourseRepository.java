@@ -1,9 +1,6 @@
 package com.example.Autodrive.repository;
 
 import com.example.Autodrive.model.Course;
-import com.example.Autodrive.model.CourseStatus;
-import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
-import org.bson.Document;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
