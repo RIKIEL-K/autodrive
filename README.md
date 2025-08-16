@@ -11,7 +11,7 @@ Application de mise en relation **chauffeur ↔ utilisateur** avec **authentific
 - **Front React servi par Nginx** : reverse proxy pour l’API, le WebSocket et un service IA (chat) optionnel.
 - **Conteneurisation** : services backend, frontend et chat IA orchestrés via Docker Compose. MongoDB peut être local (Compass), en conteneur, ou Atlas.
 
-## 🧭 Architecture (vue d’ensemble)
+## Architecture (vue d’ensemble)
 
 - **Frontend (React + Nginx)** : page de connexion unique, dashboards USER/DRIVER, interceptors pour le JWT, proxy des chemins `/api`, `/ws` et `/ai` vers les services internes.
 - **Backend (Spring Boot)** :
@@ -22,7 +22,7 @@ Application de mise en relation **chauffeur ↔ utilisateur** avec **authentific
 - **Chat IA (optionnel)** : service Python exposé derrière Nginx sous `/ai`.
 - **Réseau interne** : tous les services communiquent sur un bridge réseau; le frontend joue le rôle de porte d’entrée HTTP pour le navigateur.
 
-## 🔐 Authentification & Sécurité (résumé)
+##  Authentification & Sécurité (résumé)
 
 1. **Connexion** : le client envoie e‑mail, mot de passe et rôle (**USER** ou **DRIVER**) vers un **endpoint unique** côté backend.
 2. **Validation** : le backend retrouve le compte dans le bon référentiel (User/Driver), vérifie le mot de passe (recommandé : hachage BCrypt), et **émet** un access token (court) et un refresh token (long).
@@ -33,19 +33,19 @@ Application de mise en relation **chauffeur ↔ utilisateur** avec **authentific
 
 Bonnes pratiques appliquées : secret JWT long, access token de courte durée, refresh de plus longue durée, séparation claire des responsabilités (controller ↔ services ↔ sécurité).
 
-## 🔌 Temps réel & Messagerie
+## Temps réel & Messagerie
 
 - Connexion WebSocket unique pour une course donnée.
 - Abonnements par identifiant de course; messages diffusés aux deux parties.
 - Persistance côté base et côté client pour résilience aux rafraîchissements.
 
-## 💳 Paiements (Stripe)
+## Paiements (Stripe)
 
 - Onboarding/liaison d’un compte chauffeur.
 - Déclenchement du paiement à l’acceptation de la course par le chauffeur.
 - Transfert du montant vers le solde du chauffeur et consultation de ce solde depuis le tableau de bord.
 
-## 🛠️ Déploiement & Configuration
+## Déploiement & Configuration
 
 - **Docker Compose** orchestre les services **backend**, **frontend** et **chat IA**. MongoDB peut être :
   - **Local via Compass** (recommandé en développement). Le backend en conteneur se connecte à la base de l’hôte via l’adresse dédiée à l’hyperviseur.
@@ -58,14 +58,14 @@ Bonnes pratiques appliquées : secret JWT long, access token de courte durée, 
 - **Nginx (frontend)** : proxy des routes `/api` vers le backend, `/ws` pour WebSocket (upgrade/connection), et `/ai` vers le service IA.
 - **CORS** : ouvert en développement; restreindre en production aux domaines de confiance.
 
-## 🧪 Vérification manuelle (Postman)
+## Vérification manuelle (Postman)
 
 - **Authentification** : effectuer une requête de connexion avec e‑mail, mot de passe et rôle; vérifier la présence d’un **access token** et éventuellement d’un **refresh token** dans la réponse.
 - **Accès protégé** : appeler un endpoint protégé avec l’entête d’autorisation; vérifier la réponse **autorisée** lorsque le token est valide.
 - **Contrôle de rôle** : tester un endpoint limité au rôle **DRIVER**; attendre **interdiction** avec un token de rôle **USER** et **accès** avec un token de rôle **DRIVER**.
 - **Expiration/renouvellement** : simuler l’expiration de l’access token et utiliser l’endpoint de **refresh** pour récupérer un nouveau jeton d’accès, puis rejouer l’appel protégé.
 
-## 🐞 Dépannage rapide
+## Dépannage rapide
 
 - **Conflit de configurations MongoDB** : ne pas mélanger URI et paramètres séparés (hôte/port/utilisateur). Utiliser **une URI unique** et s’assurer qu’aucune variable d’environnement « fantôme » n’injecte une autre valeur.
 - **SRV (Atlas) introuvable** : si la résolution SRV échoue dans le conteneur, soit corriger le DNS, soit utiliser une **seed list** sans SRV, soit passer sur une base locale/Compose.
@@ -73,17 +73,17 @@ Bonnes pratiques appliquées : secret JWT long, access token de courte durée, 
 - **WebSocket** : veiller à la propagation des entêtes d’upgrade dans le reverse proxy et à l’URL interne correcte.
 - **CORS** : ouvrir en dev, restreindre en prod.
 
-## 📌 Roadmap (suggestions)
+## Roadmap (suggestions)
 
 - Refresh token en **cookie httpOnly** pour réduire l’exposition côté client.
 - **Journalisation d’audit** et **limitation de débit** sur les endpoints sensibles.
 - **Tests end‑to‑end** et observabilité (métriques, dashboards).
 - **CI/CD** et déploiement cloud managé.
 
-## 📄 Licence
+## Licence
 
 Projet sous licence libre (à préciser selon vos besoins).
 
-## 🙌 Remerciements
+## Remerciements
 
 Autodrive est un projet d’apprentissage **full‑stack** combinant **temps réel**, **sécurité JWT**, **paiements**, **Docker** et bonnes pratiques d’architecture. Contributions et retours bienvenus !
