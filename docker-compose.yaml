@@ -2,7 +2,7 @@ version: '3.8'
 services:
   backend:
     build:
-      context: ./Autodrive-1
+      context: ./backend - Java
       dockerfile: Dockerfile
     container_name: autodrive-backend
     ports:
@@ -17,7 +17,7 @@ services:
 
   frontend:
     build:
-      context: ./autofront-send-a
+      context: frontend - React
       dockerfile: Dockerfile
     container_name: autodrive-frontend
     ports:
